@@ -9,6 +9,7 @@
 - [x] CI 集成
 - [x] 完善全局组件
 - [x] 支持云开发
+- [x] 增加 git-hook 支持
 
 
 ## Install
