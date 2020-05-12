@@ -1,0 +1,22 @@
+{
+  "pages": [
+  ],
+  "usingComponents": {
+  },
+  "subPackages": [],
+  "tabBar": {
+    "color": "#C4C4C4",
+    "selectedColor": "#7AC143",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+    ],
+    "position": "bottom"
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": ""
+  }
+}
