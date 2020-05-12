@@ -310,7 +310,6 @@ export default class WXAppPlugin {
   }
 
   getFullScriptPath(path) {
-    console.log(path)
     const {
       base,
       options: { extensions },

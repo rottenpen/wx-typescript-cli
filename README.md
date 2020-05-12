@@ -1,6 +1,16 @@
 # wx-typescript-cli
 一个 TypeScript 的小程序脚手架。享受近乎原生的开发体验（少坑/有坑也是微信的锅）。
 
+## TODO Welcome pr
+
+- [x] 补充常规组件库
+- [x] 完善文档
+- [x] 发布到 npm 上
+- [x] CI 集成
+- [x] 完善全局组件
+- [x] 支持云开发
+
+
 ## Install
 暂时没有集成到 npm 上
 ```
@@ -13,7 +23,7 @@ npm i //或者 yarn install
 2. 用于生成预览二维码的开发环境 `npm run build_dev` 对应的是压缩了的开发环境
 3. 生产环境 `npm run build` 对应的是压缩了的生产环境
 
-特别注意⚠️ ** 请在微信开发者工具上，打开 dist 目录 **，而不是 src 或者当前目录！！！！！
+特别注意⚠️ **请在微信开发者工具上，打开 dist 目录**，而不是 src 或者当前目录！！！！！
 
 ## Supported features
 - 引入依赖
