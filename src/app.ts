@@ -10,21 +10,7 @@ Object.assign(global, { __Component: Component }) // 把处理page的工厂函�
 
 App({
   onLaunch (options): void{
-    // 展示本地存储能力
-    console.log(Component)
-    wx.getSystemInfo({
-      success (res): void {
-        console.log(res)
-      }
-    })
   },
   globalData: {
-    userInfo: undefined,
-    language: 1, // 1为中文 2为英文 默认为中文
-    start: {},
-    end: {},
-    startDate: '',
-    endDate: '',
-    // selectDate: []
   }
 })

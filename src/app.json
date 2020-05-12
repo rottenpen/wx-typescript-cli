@@ -1,5 +1,6 @@
 {
   "pages": [
+    "_template_page/index"
   ],
   "usingComponents": {
   },
@@ -10,6 +11,14 @@
     "backgroundColor": "#fff",
     "borderStyle": "black",
     "list": [
+      {
+        "pagePath": "_template_page/index",
+        "text": "主页"
+      },
+      {
+        "pagePath": "_template_page/index",
+        "text": "主页"
+      }
     ],
     "position": "bottom"
   },
