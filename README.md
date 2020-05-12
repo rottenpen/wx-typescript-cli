@@ -1,6 +1,20 @@
 # wx-typescript-cli
 一个 TypeScript 的小程序脚手架。享受近乎原生的开发体验（少坑/有坑也是微信的锅）。
 
+## Install
+暂时没有集成到 npm 上
+```
+git clone https://github.com/rottenpen/wx-typescript-cli.git
+cd wx-typescript-cli
+npm i //或者 yarn install
+```
+提供 3 种模式
+1. 开发环境 `npm run dev` 对应的是 HMR 的实时编译的场景需求，不会对转译的代码进行压缩。
+2. 用于生成预览二维码的开发环境 `npm run build_dev` 对应的是压缩了的开发环境
+3. 生产环境 `npm run build` 对应的是压缩了的生产环境
+
+特别注意⚠️ ** 请在微信开发者工具上，打开 dist 目录 **，而不是 src 或者当前目录！！！！！
+
 ## Supported features
 - 引入依赖
 - 支持 TypeScript 以及 es-next 语法
@@ -56,8 +70,8 @@ tips:
 - 基于 requestTask.Abort() 的取消请求
 
 ## Thanks
-wx-request 灵感来自(umi-request)[https://github.com/umijs/umi-request]
-小程序文件处理 plugin 灵感来自(wxapp-webpack-plugin)[https://github.com/Cap32/wxapp-webpack-plugin]
+- wx-request 灵感来自(umi-request)[https://github.com/umijs/umi-request]
+- 小程序文件处理 plugin 灵感来自(wxapp-webpack-plugin)[https://github.com/Cap32/wxapp-webpack-plugin]
 
 ## Code Contributors
 @rottenpen
