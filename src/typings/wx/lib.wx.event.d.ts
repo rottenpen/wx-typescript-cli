@@ -20,29 +20,53 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ***************************************************************************** */
 
-/// <reference path="./lib.wx.app.d.ts" />
-/// <reference path="./lib.wx.page.d.ts" />
-/// <reference path="./lib.wx.api.d.ts" />
-/// <reference path="./lib.wx.cloud.d.ts" />
-/// <reference path="./lib.wx.component.d.ts" />
-/// <reference path="./lib.wx.behavior.d.ts" />
-/// <reference path="./lib.wx.event.d.ts" />
-
 declare namespace WechatMiniprogram {
-    type IAnyObject = Record<string, any>
-    type Optional<F> = F extends (arg: infer P) => infer R ? (arg?: P) => R : F
-    type OptionalInterface<T> = { [K in keyof T]: Optional<T[K]> }
-    interface AsyncMethodOptionLike {
-        success?: (...args: any[]) => void
+    interface Touch {
+        clientX: number
+        clientY: number
+        force: number
+        identifier: number
+        pageX: number
+        pageY: number
     }
-    type PromisifySuccessResult<
-        P,
-        T extends AsyncMethodOptionLike
-    > = P extends { success: any }
-        ? void
-        : P extends { fail: any }
-        ? void
-        : P extends { complete: any }
-        ? void
-        : Promise<Parameters<Exclude<T['success'], undefined>>[0]>
+    interface Event {
+        currentTarget: {
+            id: string
+            dataset: {
+                [key: string]: string
+            }
+            offsetTop: number
+            offsetLeft: number
+        }
+        target: {
+            id: string
+            dataset: {
+                [key: string]: string
+            }
+            offsetTop: number
+            offsetLeft: number
+        }
+        timeStamp: number
+        touches: Touch[]
+        mut: boolean
+        type: string
+    }
+    interface TapEvent extends Event {
+        changedTouches: []
+        detail: {
+            x: number
+            y: number
+        }
+        type: 'tap'
+    }
+
+    interface InputEvent extends Event {
+        changedTouches: []
+        detail: {
+            cursor: number
+            keyCode: number
+            value: string
+        }
+        type: 'input'
+    }
 }
