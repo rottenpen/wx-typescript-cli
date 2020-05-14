@@ -20,7 +20,7 @@ cd wx-typescript-cli
 npm i //或者 yarn install
 ```
 提供 3 种模式
-1. 开发环境 `npm run dev` 对应的是 HMR 的实时编译的场景需求，不会对转译的代码进行压缩。
+1. 开发环境 `npm run dev ` 或者 `npm run start` 对应的是 HMR 的实时编译的场景需求，不会对转译的代码进行压缩。
 2. 用于生成预览二维码的开发环境 `npm run build_dev` 对应的是压缩了的开发环境
 3. 生产环境 `npm run build` 对应的是压缩了的生产环境
 
