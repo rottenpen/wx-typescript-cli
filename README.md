@@ -64,6 +64,7 @@ tips:
 
 ## MiniProgram Types
 较为齐全的小程序 Types 支持（持续更新中！）
+同步于 https://github.com/wechat-miniprogram/api-typings （如果有缺漏，请pr或者如作者一样手动添加到 `src/types/index.d.ts` 里）
 
 ## request
 为 TypeScript 的小程序封装了一个类 axios 的库（基于 umi-request）
