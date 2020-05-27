@@ -1,4 +1,5 @@
 # wx-typescript-cli
+
 一个 TypeScript 的小程序脚手架。享受近乎原生的开发体验（少坑/有坑也是微信的锅）。
 
 ## TODO Welcome pr
@@ -10,23 +11,30 @@
 - [x] 完善全局组件
 - [x] 支持云开发
 - [x] 增加 git-hook 支持
-
+- [x] 支持自动化生成骨架屏
 
 ## Install
+
 暂时没有集成到 npm 上
-```
+
+```shell
+
 git clone https://github.com/rottenpen/wx-typescript-cli.git
 cd wx-typescript-cli
 npm i //或者 yarn install
+
 ```
+
 提供 3 种模式
-1. 开发环境 `npm run dev ` 或者 `npm run start` 对应的是 HMR 的实时编译的场景需求，不会对转译的代码进行压缩。
+
+1. 开发环境 `npm run dev` 或者 `npm run start` 对应的是 HMR 的实时编译的场景需求，不会对转译的代码进行压缩。
 2. 用于生成预览二维码的开发环境 `npm run build_dev` 对应的是压缩了的开发环境
 3. 生产环境 `npm run build` 对应的是压缩了的生产环境
 
 特别注意⚠️ **请在微信开发者工具上，打开 dist 目录**，而不是 src 或者当前目录！！！！！
 
 ## Supported features
+
 - 引入依赖
 - 支持 TypeScript 以及 es-next 语法
 - 支持在 wxss 里使用 less
@@ -36,6 +44,7 @@ npm i //或者 yarn install
 ## Class Page
 
 为了更好感受 TS 带来的开发体验，对 Page 开发进行魔改。（慎入！）
+
 - 需要继承 Page 的基类，来获得 type 的支持。
 - 需要通过全局的 component 工厂函数装饰 Class。
 - 可以在工厂函数中对 Class 进行处理，从而实现 Mixin 的效果。
@@ -63,12 +72,16 @@ tips:
 需要工厂函数修饰类，是因为小程序规定 page 不能传入带有构造函数的对象，所以需要对 class 进行预处理。但是这样的同时也带来了一定好处，我们可以在工厂函数对 options 对象进行 Mixin。
 
 ## MiniProgram Types
+
 较为齐全的小程序 Types 支持（持续更新中！）
 同步于 https://github.com/wechat-miniprogram/api-typings （如果有缺漏，请pr或者如作者一样手动添加到 `src/types/index.d.ts` 里）
 
 ## request
+
 为 TypeScript 的小程序封装了一个类 axios 的库（基于 umi-request）
+
 ### Supported features
+
 - url 参数自动序列化
 - post 数据提交方式简化
 - response 返回处理简化
@@ -82,12 +95,15 @@ tips:
 - 基于 requestTask.Abort() 的取消请求
 
 ## Thanks
+
 - wx-request 灵感来自(umi-request)[https://github.com/umijs/umi-request]
 - 小程序文件处理 plugin 灵感来自(wxapp-webpack-plugin)[https://github.com/Cap32/wxapp-webpack-plugin]
 
 ## Code Contributors
+
 @rottenpen
 @XLinzexin
 
 ## LICENSE
+
 MIT

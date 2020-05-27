@@ -1,4 +1,4 @@
-import { TmgPage } from "@/page";
+import { TmgPage } from "@/typings/page";
 interface IndexPageData {
   list? : []
 }

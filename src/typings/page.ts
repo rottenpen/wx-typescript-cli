@@ -1,4 +1,8 @@
-
+declare let Page: WechatMiniprogram.Page.Constructor
+type Record<K extends keyof any, T> = {
+  [P in K]: T;
+};
+type IAnyObject = Record<string, any>
 interface IPageScrollOption {
   /** 页面在垂直方向已滚动的距离（单位px） */
   scrollTop: number;
@@ -79,7 +83,7 @@ interface ITabItemTapOption {
 /**
  * Page 基类
  */
-export class TmgPage<D extends IAnyObject = any> implements Page.PageInstance{
+export class TmgPage<D extends IAnyObject = any>{
   /** 页面的初始数据
      * 
      * `data` 是页面第一次渲染使用的**初始数据**。
@@ -199,8 +203,8 @@ export class TmgPage<D extends IAnyObject = any> implements Page.PageInstance{
 }
 // Reflect.deleteProperty(TmgPage.prototype, 'constructor')
 
-export class SuperPage implements Page.PageInstance {
+// export class SuperPage implements Page.PageInstance {
 
-  public readonly setData!: (obj: any, cb?: () => void) => void
+//   public readonly setData!: (obj: any, cb?: () => void) => void
 
-}
+// }

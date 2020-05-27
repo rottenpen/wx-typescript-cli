@@ -93,10 +93,7 @@ export default class WXAppPlugin {
     const { clear } = this.options;
     let isFirst = true;
     this.enforceTarget(compiler);
-    let keys = [];
-    for (let key in compiler.hooks) {
-      keys.push(key);
-    }
+
     compiler.hooks.run.tapAsync(
       'run',
       async (compiler, callback) => {

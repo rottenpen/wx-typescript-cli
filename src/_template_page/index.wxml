@@ -1,3 +1,5 @@
 <view class="flex">
   欢迎使用 wx-typescript-cli
+  <button id="confirm">确认</button>
+  <button id="confirm">取消</button>
 </view>

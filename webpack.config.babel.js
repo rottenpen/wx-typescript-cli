@@ -144,6 +144,17 @@ export default (env = {}) => {
             },
           ],
         },
+        {
+          test: /\.(wxml)$/,
+          include: /src/,
+          use: [
+            {
+              loader: resolve('webpack-plugin/page-skeleton-loader.js'),
+              options: {
+              },
+            },
+          ],
+        }
       ]
     },
     plugins: [
