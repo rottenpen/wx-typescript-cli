@@ -1,7 +1,8 @@
 import sax from "sax";
 import { resolve, basename, isAbsolute, relative, dirname, join } from 'path';
 import { getOptions } from 'loader-utils';
-const { parse } = require('@vue/component-compiler-utils')
+import { SimpleHtmlParser } from './htmlTokenizer'
+import { parseToVnode } from './parse'
 
 const ROOT_TAG_NAME = 'xxx-wxml-root-xxx';
 const ROOT_TAG_START = `<${ROOT_TAG_NAME}>`;
@@ -28,28 +29,12 @@ exports.default = function (source) {
   const callback = this.async()
   // 获得 options
   const options = getOptions(this) || {}
-  function loadTemplateCompiler (loaderContext) {
-    try {
-      return require('vue-template-compiler')
-    } catch (e) {
-      if (/version mismatch/.test(e.toString())) {
-        loaderContext.emitError(e)
-      } else {
-        loaderContext.emitError(new Error(
-          `[vue-loader] vue-template-compiler must be installed as a peer dependency, ` +
-          `or a compatible compiler implementation must be passed via options.`
-        ))
-      }
-    }
-  }
-  const descriptor = parse({
-    source,
-    compiler: loadTemplateCompiler(loaderContext),
-    filename: basename(resourcePath),
-    sourceRoot,
-    needMap: sourceMap
-  })
-  console.log(descriptor)
+  const ast = (new SimpleHtmlParser())
+  ast.parse(source)
+  // 通过 SimpleHtmlParser 生成的 token 进行 parse 处理
+  const token = ast.contentHandler._sb
+  console.log(parseToVnode(token))
+  
   // return source
   try {
     callback(null, source)

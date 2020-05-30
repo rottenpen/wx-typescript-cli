@@ -1,6 +1,6 @@
 import { TmgPage } from "@/typings/page";
 interface IndexPageData {
-  list? : []
+  list? : any[]
 }
 /**
 * 定义 page 类
@@ -9,6 +9,7 @@ const com = global['__Component']
 @com()
 class TemplatePage extends TmgPage{
   public data: IndexPageData = {
+    list: ['a']
   }
   /**
    * onLoad

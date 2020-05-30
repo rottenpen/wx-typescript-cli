@@ -1,5 +1,11 @@
-<view class="flex">
+<wxs module="m1">
+var msg = "hello world";
+
+module.exports.message = msg;
+</wxs>
+<view class="flex" wx:if="{{list.length > 0}}">
   欢迎使用 wx-typescript-cli
+  <image src="/images/logo.png" ske/>
   <button id="confirm">确认</button>
   <button id="confirm">取消</button>
 </view>
