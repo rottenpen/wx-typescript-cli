@@ -2,7 +2,7 @@
 
 一个 TypeScript 的小程序脚手架。享受近乎原生的开发体验（少坑/有坑也是微信的锅）。
 
-## TODO Welcome pr
+## 📕 TODO Welcome pr
 
 - [x] 补充常规组件库
 - [x] 完善文档
@@ -11,9 +11,9 @@
 - [x] 完善全局组件
 - [x] 支持云开发
 - [x] 增加 git-hook 支持
-- [x] 支持自动化生成骨架屏
+- [x] ~~支持自动化生成骨架屏~~ 在骨架屏 loader 的基础上设计骨架屏组件
 
-## Install
+## 📕 Install
 
 暂时没有集成到 npm 上
 
@@ -33,15 +33,17 @@ npm i //或者 yarn install
 
 特别注意⚠️ **请在微信开发者工具上，打开 dist 目录**，而不是 src 或者当前目录！！！！！
 
-## Supported features
+## 🚀 Supported features
 
 - 引入依赖
 - 支持 TypeScript 以及 es-next 语法
 - 支持在 wxss 里使用 less
 - 支持类 axios 的网络请求开发体验
 - 较为完善的 wx/types
+- 自动生成骨架屏组件的 loader
+- 自动添加全局组件的 loader
 
-## Class Page
+## 🎆 Class Page
 
 为了更好感受 TS 带来的开发体验，对 Page 开发进行魔改。（慎入！）
 
@@ -71,12 +73,12 @@ class TemplatePage extends TmgPage{
 tips: 
 需要工厂函数修饰类，是因为小程序规定 page 不能传入带有构造函数的对象，所以需要对 class 进行预处理。但是这样的同时也带来了一定好处，我们可以在工厂函数对 options 对象进行 Mixin。
 
-## MiniProgram Types
+## 🎆 MiniProgram Types
 
 较为齐全的小程序 Types 支持（持续更新中！）
 同步于 https://github.com/wechat-miniprogram/api-typings （如果有缺漏，请pr或者如作者一样手动添加到 `src/types/index.d.ts` 里）
 
-## request
+## 🎆 request
 
 为 TypeScript 的小程序封装了一个类 axios 的库（基于 umi-request）
 
@@ -94,12 +96,67 @@ tips:
 - 类 axios 的取消请求
 - 基于 requestTask.Abort() 的取消请求
 
-## Thanks
+### 👷 骨架屏
+
+- 目前已完成了骨架屏 loader 的制作。
+- 它会根据WXML 里的 skeleton 属性生成一个具有相同属性的 skeleton 组件。
+
+#### template
+
+```html
+/// 源代码
+<wxs module="m1">
+var msg = "hello world";
+
+module.exports.message = msg;
+</wxs>
+<view class="flex" wx:if="{{list.length > 0}}" skeleton-root>
+  欢迎使用 wx-typescript-cli
+  <image src="/images/logo.png" skeleton/>
+  <button id="confirm" skeleton>确认</button>
+  <button id="confirm" skeleton>取消</button>
+</view>
+/// 编译后
+<wxs module="m1">
+
+var msg = "hello world";
+
+module.exports.message = msg;
+
+</wxs>
+ 
+<view class="flex" wx:if="{{list.length > 0}}" skeleton-root>
+
+  欢迎使用 wx-typescript-cli
+  
+<image src="../images/logo.png" skeleton>
+</image>
+ 
+<button id="confirm" skeleton>
+确认
+</button>
+ 
+<button id="confirm" skeleton>
+取消
+</button>
+</view>
+<skeleton class="flex" wx:if="{{list.length > 0}}" skeleton-root>
+<skeleton-item src="../images/logo.png" skeleton>
+</skeleton-item>
+<skeleton-item id="confirm" skeleton>
+</skeleton-item>
+<skeleton-item id="confirm" skeleton>
+</skeleton-item>
+</skeleton>
+```
+
+
+## 💐 Thanks
 
 - wx-request 灵感来自(umi-request)[https://github.com/umijs/umi-request]
 - 小程序文件处理 plugin 灵感来自(wxapp-webpack-plugin)[https://github.com/Cap32/wxapp-webpack-plugin]
 
-## Code Contributors
+## 👷 Code Contributors
 
 @rottenpen
 @XLinzexin
