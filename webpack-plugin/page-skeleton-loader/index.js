@@ -1,13 +1,12 @@
 import sax from "sax";
 import { resolve, basename, isAbsolute, relative, dirname, join } from 'path';
 import { getOptions } from 'loader-utils';
-import { SimpleHtmlParser } from './htmlTokenizer'
-import { parseToVnode } from './parse'
+import { transform } from "./transform";
+import { generate } from "./generate";
 
-const ROOT_TAG_NAME = 'xxx-wxml-root-xxx';
-const ROOT_TAG_START = `<${ROOT_TAG_NAME}>`;
-const ROOT_TAG_END = `</${ROOT_TAG_NAME}>`;
-const ROOT_TAG_LENGTH = ROOT_TAG_START.length;
+const compiler = require('./wx-template-compiler')
+// import { isString, transform } from "lodash";
+// import { baseParse } from "./parse";
 
 exports.default = function (source) {
   const loaderContext = this
@@ -29,16 +28,11 @@ exports.default = function (source) {
   const callback = this.async()
   // 获得 options
   const options = getOptions(this) || {}
-  const ast = (new SimpleHtmlParser())
-  ast.parse(source)
-  // 通过 SimpleHtmlParser 生成的 token 进行 parse 处理
-  const token = ast.contentHandler._sb
-  console.log(parseToVnode(token))
-  
-  // return source
+  const {ast} = compiler.compile(`<template>${source}</template>`)
+  transform(ast.children)
+  let s = generate(ast.children)
   try {
-    callback(null, source)
-    
+    callback(null, s)
   } catch (error) {
     callback('error', source)
   }

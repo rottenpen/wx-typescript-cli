@@ -1,114 +1,193 @@
-// for script (e.g. type="x/template") or style, do not decode content
-function isTextTag (el) {
-  return el.tag === 'script' || el.tag === 'style'
+// 字符转译
+const decodeRe = /&(gt|lt|amp|apos|quot);/g
+const decodeMap = {
+  gt: '>',
+  lt: '<',
+  amp: '&',
+  apos: "'",
+  quot: '"'
 }
-function makeAttrsMap (attrs) {
-  const map = {}
-  for (let i = 0, l = attrs.length; i < l; i++) {
-    map[attrs[i].name] = attrs[i].value
-  }
-  return map
+const NodeTypes = {
+  ROOT = 'ROOT',
+  ELEMENT = 'ELEMENT',
+  TEXT = 'TEXT',
+  COMMENT = 'COMMENT',
+  SIMPLE_EXPRESSION = 'SIMPLE_EXPRESSION',
+  INTERPOLATION = 'INTERPOLATION',
+  ATTRIBUTE = 'ATTRIBUTE',
+  DIRECTIVE = 'DIRECTIVE',
+  // containers
+  COMPOUND_EXPRESSION = 'COMPOUND_EXPRESSION',
+  IF = 'IF',
+  IF_BRANCH = 'IF_BRANCH',
+  FOR = 'FOR',
+  TEXT_CALL = 'TEXT_CALL',
+  // codegen
+  VNODE_CALL = 'VNODE_CALL',
+  JS_CALL_EXPRESSION = 'JS_CALL_EXPRESSION',
+  JS_OBJECT_EXPRESSION = 'JS_OBJECT_EXPRESSION',
+  JS_PROPERTY = 'JS_PROPERTY',
+  JS_ARRAY_EXPRESSION = 'JS_ARRAY_EXPRESSION',
+  JS_FUNCTION_EXPRESSION = 'JS_FUNCTION_EXPRESSION',
+  JS_CONDITIONAL_EXPRESSION = 'JS_CONDITIONAL_EXPRESSION',
+  JS_CACHE_EXPRESSION = 'JS_CACHE_EXPRESSION',
+  // ssr codegen
+  JS_BLOCK_STATEMENT = 'JS_BLOCK_STATEMENT',
+  JS_TEMPLATE_LITERAL = 'JS_TEMPLATE_LITERAL',
+  JS_IF_STATEMENT = 'JS_IF_STATEMENT',
+  JS_ASSIGNMENT_EXPRESSION = 'JS_ASSIGNMENT_EXPRESSION',
+  JS_SEQUENCE_EXPRESSION = 'JS_SEQUENCE_EXPRESSION',
+  JS_RETURN_STATEMENT = 'JS_RETURN_STATEMENT'
 }
-/**
- * 生成 AST 元素
- * @param {string} tag 
- * @param {Array<ASTAttr>} attrs 
- * @param {ASTElement} parent
- */
-export function createASTElement(tag, attrs, parent) {
+const TextModes = {
+  DATA: 0, // 正常的元素
+  RCDATA: 1, // <textarea>
+  RAWTEXT: 2, // <style>,<script> 小程序里用于 <wxs>
+  CDATA: 3,
+  ATTRIBUTE_VALUE: 4
+}
+const Namespaces = {
+  HTML: 0
+}
+const NO = () => false
+export const defaultParserOptions = {
+  delimiters: [`{{`, `}}`],
+  getNamespace: () => Namespaces.HTML,
+  getTextMode: () => TextModes.DATA,
+  isVoidTag: NO,
+  isPreTag: NO,
+  isCustomElement: NO,
+  decodeEntities: (rawText) =>
+    rawText.replace(decodeRE, (_, p1) => decodeMap[p1]),
+  onError: defaultOnError
+}
+
+export function baseParse(content, options = {}) {
+  const context = createParseContext(content, options)
+  const start = getCursor(context)
+  return creatRoot(
+    parseChildren(context, TextModes.DATA, []),
+    getSelection(context, start)
+  )
+}
+function createParseContext(context, options) {
   return {
-    type: 1,
-    tag,
-    attrsList: attrs,
-    attrsMap: makeAttrsMap(attrs),
-    rawAttrsMap: {},
-    parent,
-    children: []
+    options: {
+      ...defaultParseOptions,
+      ...options
+    },
+    column: 1,
+    line: 1,
+    offset: 0,
+    originalSource: context,
+    source: content,
+    inPre: false,
+    inVPre: false
   }
+}
+function creatRoot(params) {
   
 }
-function vnode(tag, key, props = {}, children, text) {
-  return {
-    tag, key, props, children, text
-  }
-}
-/**
- * 将 token 转化为虚拟 dom
- * @param { Array<string> } tokens 
- */
-export function parseToVnode(tokens) {
-  let root = vnode('', undefined, {}, [], '')
-  let i = 0
-  tokens = tokens.map(ele => ele.trim())
-  console.log(tokens.length)
-  while (i < tokens.length) {
-    if(tokens[i] && tokens[i][0] == '<') {
-      // ‘</’ 的时候确定为 endTag
-      if(tokens[i][1] == '/') {}
-      // 其他情况判断为 startTag
-      else {
-        let tag = tokens[i].slice(1)
-        // 这样写会导致重复的 prop 会被后者覆盖
-        let props = {}
-        let hasChildren = true
-        let children = []
-        let text = ''
-        i++
-        while(tokens[i] !== '>' && i < tokens.length) {
-          // 判断是否有 =, 且 = 不能是第一个
-          if(tokens[i].indexOf('=') > 0) {
-            let index = tokens[i].indexOf('=')
-            let key = tokens.slice(0, index)
-            let value = tokens.slice(index + 1)
-            props[key] = value
-          } else if (tokens[i] === '/') {
-            if(tokens[i + 1] === '>') hasChildren = false
-          } else {
-            props[tokens[i]] = undefined
-          }
-          // TODO: 分词函数有bug 会在👉 ""/> 的时候把 / 忽略掉，所以要写成 "" />
-          // 但是 sky/> 的时候只会分成 ['sky/', '>']
 
-          // 如果 hasChildren true 的话，indexOf 找到下一个 endTag，之间的元素递归，如果没就赋值false
-          
-          i++
-        }
-        // console.log('-=--', tokens[i])
-        i++
-        if (tag === 'wxs') {
-          let endIndex = tokens.indexOf(`</${tag}>`)
-          if(endIndex > i) {
-            // console.log(tokens.slice(i, endIndex), tokens.slice(i, endIndex).reduce((sum, ele) => sum + ele, ''))
-            // children.push(vnode(undefined, undefined, props = {}, children, tokens.slice(i, endIndex).reduce((sum, ele) => sum + ele, '')))
-            // children = parseToVnode(tokens.slice(i, endIndex)).children
-            text = tokens.slice(i, endIndex).reduce((sum, ele) => sum + ele, '')
-            i = endIndex
-          }
-        } else if (hasChildren) {
-          console.log(tag)
-          let endIndex = tokens.indexOf(`</${tag}>`)
-          if(endIndex > i) {
-            // console.log(tokens.slice(i + 1, endIndex))
-            children = parseToVnode(tokens.slice(i, endIndex)).children
-            i = endIndex
-          }
-        }
-        
-        root.children.push(vnode(tag, undefined, props, children, text))
-        console.log('ch:', root.children)
-        i++
-        console.log('i:', i)
+function parseChildren(context, mode, ancestors) {
+  const parent = last(ancestors)
+  const ns = parent ? parent.ns : Namespaces.HTML
+  const nodes = []
+
+  while (!isEnd(context, mode, ancestors)) {
+
+  }
+
+  let removedWhitespace = false
+  if (mode !== TextModes.RAWTEXT) {
+    if (!context.inPre) {
+
+    } else if (parent && context.options.isPreTag(parent.tag)) {
+      // 根据规范删掉前导换行符
+      const first = nodes[0]
+      if (first && first.type === NodeTypes.TEXT) {
+        first.content = first.content.replace(/^\r?\n/, '')
       }
-    } else {
-      let text = ''
-      while (i < tokens.length && tokens[i][0] !== '<' ) {
-        text += tokens[i]
-        i++
-      }
-      let child = vnode(undefined, undefined, {}, [], text)
-      text.length > 0 && root.children.push(child)
-      // console.log('i:', i)
     }
   }
-  return root
+
+  return removedWhitespace ? nodes.filter(Boolean) : nodes
+}
+
+function parseElement(context, ancestors) {
+  // Start tag
+  const wasInPre = context.inPre
+  const wasInVPre = context.inVPre
+}
+/**
+ * 格式化字段和起始点对象
+ * @param {*} context 
+ * @param {*} start 
+ * @param {*} end 
+ */
+function getSelection(context, start, end) {
+  end = end || getCursor(context)
+  return {
+    start,
+    end,
+    source: context.originalSource.slice(start.offset, end.offset)
+  }
+}
+
+function isEnd(context, mode, ancestors) {
+  const s = context.source
+
+  switch (mode) {
+    case TextModes.DATA:
+      if (startsWith(s, '</')) {
+        //TODO: probably bad performance
+        for (let i = ancestors.length - 1; i >= 0; --i) {
+          if (startsWithEndTagOpen(s, ancestors[i].tag)) {
+            return true
+          }
+        }
+      }
+      break
+
+      case TextModes.RCDATA:
+      case TextModes.RAWTEXT: {
+        const parent = last(ancestors)
+        if (parent && startsWithEndTagOpen(s, parent.tag)) {
+          return true
+        }
+        break
+      }
+
+      case TextModes.CDATA:
+        if (startsWith(s, ']]>')) {
+          return true
+        }
+        break
+      
+      default:
+        break
+  }
+
+  return !s
+}
+function startsWith(source, searchString) {
+  return source.startsWith(searchString)
+}
+function startsWithEndTagOpen(source, tag) {
+  return (
+    startsWith(source, '</') &&
+    source.substr(2, tag.length).toLowerCase() === tag.toLowerCase() &&
+    /[\t\n\f />]/.test(source[2 + tag.length] || '>')
+  )
+}
+/**
+ * 用来过滤属性，返回字符对应行数
+ * @context {*} ParseContext
+ */
+function getCursor(context) {
+  const {column, line, offset} = context
+  return {column, line, offset}
+}
+function last(arr) {
+  return arr[arr.length - 1]
 }

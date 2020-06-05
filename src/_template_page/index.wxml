@@ -3,9 +3,9 @@ var msg = "hello world";
 
 module.exports.message = msg;
 </wxs>
-<view class="flex" wx:if="{{list.length > 0}}">
+<view class="flex" wx:if="{{list.length > 0}}" skeleton-root>
   欢迎使用 wx-typescript-cli
-  <image src="/images/logo.png" ske/>
-  <button id="confirm">确认</button>
-  <button id="confirm">取消</button>
+  <image src="/images/logo.png" skeleton/>
+  <button id="confirm" skeleton>确认</button>
+  <button id="confirm" skeleton>取消</button>
 </view>

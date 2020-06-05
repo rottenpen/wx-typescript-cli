@@ -116,7 +116,6 @@ export default (env = {}) => {
           type: 'javascript/auto',
           include: /src/,
           loader: resolve('webpack-plugin/json-loader.js')
-					
         },
         {
           test: /\.(wxml)$/,
@@ -144,17 +143,17 @@ export default (env = {}) => {
             },
           ],
         },
-        // {
-        //   test: /\.(wxml)$/,
-        //   include: /src/,
-        //   use: [
-        //     {
-        //       loader: resolve('webpack-plugin/page-skeleton-loader'),
-        //       options: {
-        //       },
-        //     },
-        //   ],
-        // }
+        {
+          test: /\.(wxml)$/,
+          include: /src/,
+          use: [
+            {
+              loader: resolve('webpack-plugin/page-skeleton-loader'),
+              options: {
+              },
+            },
+          ],
+        }
       ]
     },
     plugins: [
