@@ -1,5 +1,5 @@
 // 遍历一遍一遍结构，然后把新生成的骨架屏 ast push 到 template.children 后
-
+// TODO: 异常处理，允许通过 options 修改 component 的名称
 let skeletonRoot
 exports.transform = function (nodeGroup) {
   dfs(nodeGroup)

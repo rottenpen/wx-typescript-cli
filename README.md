@@ -99,7 +99,7 @@ tips:
 ### 👷 骨架屏
 
 - 目前已完成了骨架屏 loader 的制作。
-- 它会根据WXML 里的 skeleton 属性生成一个具有相同属性的 skeleton 组件。
+- 它会根据 WXML 里的 skeleton 属性生成一个具有相同属性的 skeleton 组件。具体内容在[readme.md](./webpack-plugin/page-skeleton-loader/readme.md)
 
 #### template
 

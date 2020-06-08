@@ -1,4 +1,5 @@
 import { TmgPage } from "@/typings/page";
+import ajax from '@/api/wxfetch'
 interface IndexPageData {
   list? : any[]
 }
@@ -14,7 +15,24 @@ class TemplatePage extends TmgPage{
   /**
    * onLoad
    */
-  public onLoad(options) {
+  public onLoad() {
+    let data = {
+      name: 'Tom'
+    }
+    this.getUser({data}).then(res => {
+      console.log(res)
+    })
+  }
+  /**
+   * getUser
+   */
+  public getUser(options) {
+    let CancelToken = ajax.CancelToken
+    let source = CancelToken.source()
+    options.cancelToken = source.token
+    let p = ajax.post('/users/', options)
+    // source.cancel('???')
+    return p
   }
   /**
    * showToast

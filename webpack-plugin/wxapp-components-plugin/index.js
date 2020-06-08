@@ -334,7 +334,7 @@ export default class WXAppPlugin {
       entryResources,
     } = this;
     compiler.hooks.compilation.tap('compilation', (compilation) => {
-      compilation.hooks.buildModule.tap('before-chunk-assets', () => {
+      compilation.hooks.beforeChunkAssets.tap('before-chunk-assets', () => {
         const assetsChunkIndex = compilation.chunks.findIndex(
           ({ name }) => name === assetsChunkName,
         );

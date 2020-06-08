@@ -23,10 +23,9 @@ function createRequest(baseUrl) {
   return request;
 }
 
-let ajax:any = createRequest('http://www.example.com')
+let ajax:any = createRequest('http://localhost:3000')
 /** request拦截器 */
 ajax.interceptors.request.use((url, options) => {
-  console.log(options)
   return (
     {
       url: `${url}`,

@@ -1,4 +1,4 @@
-import sax from "sax";
+// TODO：考虑可能遇到的更多问题，支持 option 对 loader 进行拓展
 import { resolve, basename, isAbsolute, relative, dirname, join } from 'path';
 import { getOptions } from 'loader-utils';
 import { transform } from "./transform";
