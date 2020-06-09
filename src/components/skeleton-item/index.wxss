@@ -1,0 +1,7 @@
+.skeleton-item {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(194, 207, 214)!important;
+  box-sizing: border-box;
+  border: 5rpx solid #ffffff;
+}

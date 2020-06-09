@@ -1,0 +1,11 @@
+.heading {
+  width: 600rpx;
+  height: 40rpx;
+  font-size: 34rpx;
+  line-height: 40rpx;
+}
+.confirm {
+  display: block;
+  width: 200rpx;
+  height: 100rpx;
+}

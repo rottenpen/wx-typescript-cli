@@ -2,6 +2,7 @@ import { TmgPage } from "@/typings/page";
 import ajax from '@/api/wxfetch'
 interface IndexPageData {
   list? : any[]
+  skeletonShow: boolean
 }
 /**
 * 定义 page 类
@@ -10,7 +11,8 @@ const com = global['__Component']
 @com()
 class TemplatePage extends TmgPage{
   public data: IndexPageData = {
-    list: ['a']
+    list: ['a'],
+    skeletonShow: true
   }
   /**
    * onLoad

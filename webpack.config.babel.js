@@ -146,6 +146,7 @@ export default (env = {}) => {
         {
           test: /\.(wxml)$/,
           include: /src/,
+          exclude: /src\/components/,
           use: [
             {
               loader: resolve('webpack-plugin/page-skeleton-loader'),

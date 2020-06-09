@@ -22,6 +22,8 @@ function dfs(nodeGroup) {
           parent: [],
           children: [],
         })
+        skeletonRoot.attrsMap = Object.assign({}, skeletonRoot.attrsMap)
+        skeletonRoot.attrsMap['wx:if'] = '{{skeletonShow}}'
         dfsSkeletonItem(node.children, skeletonRoot)
       }
     }

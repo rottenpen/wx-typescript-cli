@@ -3,6 +3,9 @@
     "_template_page/index"
   ],
   "usingComponents": {
+    "skeleton": "components/skeleton/index",
+    "skeleton-group": "components/skeleton-group/index",
+    "skeleton-item": "components/skeleton-item/index"
   },
   "subPackages": [],
   "tabBar": {
