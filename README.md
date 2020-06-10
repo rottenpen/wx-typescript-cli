@@ -4,15 +4,15 @@
 
 ## 📕 TODO Welcome pr
 
-- [x] 补充常规组件库
-- [x] 完善文档
-- [x] 发布到 npm 上
-- [x] CI 集成
-- [x] 完善全局组件
-- [x] 支持云开发
-- [x] 增加 git-hook 支持
-- [x] ~~支持自动化生成骨架屏 在骨架屏 loader 的基础上设计骨架屏组件~~
-- [x] 优化改进骨架屏
+- [ ] 补充常规组件库
+- [ ] 完善文档
+- [ ] 发布到 npm 上
+- [ ] CI 集成
+- [ ] 完善全局组件
+- [ ] 支持云开发
+- [ ] 增加 git-hook 支持
+- [x] 支持自动化生成骨架屏,在骨架屏 loader 的基础上设计骨架屏组件~~
+- [ ] 优化改进骨架屏
 
 ## 📕 Install
 
@@ -36,14 +36,14 @@ npm i //或者 yarn install
 
 ## 🚀 Supported features
 
-- 引入依赖
-- 支持 TypeScript 以及 es-next 语法
-- 支持在 wxss 里使用 less
-- 支持类 axios 的网络请求开发体验
-- 较为完善的 wx/types
-- 自动生成骨架屏组件的 loader
-- 自动添加全局组件的 loader
-- 支持自动化生成骨架屏
+- [x] 引入依赖
+- [x] 支持 TypeScript 以及 es-next 语法
+- [x] 支持在 wxss 里使用 less
+- [x] 支持类 axios 的网络请求开发体验
+- [x] 较为完善的 wx/types
+- [x] 自动生成骨架屏组件的 loader
+- [x] 自动添加全局组件的 loader
+- [x] 支持自动化生成骨架屏
 
 ## 🎆 Class Page
 
@@ -98,7 +98,7 @@ tips:
 - 类 axios 的取消请求
 - 基于 requestTask.Abort() 的取消请求
 
-### 👷 骨架屏
+## 👷Skeleton
 
 - 目前已完成了骨架屏 loader 的制作。
 - 它会根据 WXML 里的 skeleton 属性生成一个具有相同属性的 skeleton 组件。具体内容在[readme.md](./webpack-plugin/page-skeleton-loader/readme.md)
@@ -107,7 +107,7 @@ tips:
 ![关闭骨架屏时](./src/images/screenshot2.png) 
 ![打开骨架屏时](./src/images/screenshot.png)
 
-#### template
+### template
 
 ```html
 /// 源代码
@@ -130,18 +130,18 @@ var msg = "hello world";
 module.exports.message = msg;
 
 </wxs>
- 
+
 <view class="flex" wx:if="{{list.length > 0}}" skeleton-root>
 
   欢迎使用 wx-typescript-cli
   
 <image src="../images/logo.png" skeleton>
 </image>
- 
+
 <button id="confirm" skeleton>
 确认
 </button>
- 
+
 <button id="confirm" skeleton>
 取消
 </button>
@@ -156,11 +156,10 @@ module.exports.message = msg;
 </skeleton>
 ```
 
-
 ## 💐 Thanks
 
-- wx-request 灵感来自(umi-request)[https://github.com/umijs/umi-request]
-- 小程序文件处理 plugin 灵感来自(wxapp-webpack-plugin)[https://github.com/Cap32/wxapp-webpack-plugin]
+- wx-request 灵感来自[umi-request](https://github.com/umijs/umi-request)
+- 小程序文件处理 plugin 灵感来自[wxapp-webpack-plugin](https://github.com/Cap32/wxapp-webpack-plugin)
 
 ## 👷 Code Contributors
 
